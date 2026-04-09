@@ -3,14 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0;url=https://script.google.com/macros/s/AKfycbyAUBAqUsCKFaUKZLDepclHOUBZRRZwiqn2zI5fnZ0GmKqQWQYoS8-9_e1NfkyrO0yy/exec">
   <title>Water Purchase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f1f5f9; color: #333; }
-    a { color: #2563eb; font-size: 18px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, #2563eb, #0ea5e9);
+      border-radius: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    }
+    .icon svg { width: 32px; height: 32px; }
+    h1 { font-size: 22px; font-weight: 700; color: #0f172a; }
+    p { font-size: 14px; color: #64748b; margin-top: 8px; }
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 28px;
+      padding: 16px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+      transition: transform 0.15s;
+    }
+    .btn:active { transform: scale(0.97); }
   </style>
 </head>
 <body>
-  <p>リダイレクト中... <a href="https://script.google.com/macros/s/AKfycbyAUBAqUsCKFaUKZLDepclHOUBZRRZwiqn2zI5fnZ0GmKqQWQYoS8-9_e1NfkyrO0yy/exec">こちらをタップ</a></p>
+  <div class="card">
+    <div class="icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+    </div>
+    <h1>Water Purchase</h1>
+    <p>水の社販アプリ</p>
+    <a class="btn" href="https://script.google.com/macros/s/AKfycbyAUBAqUsCKFaUKZLDepclHOUBZRRZwiqn2zI5fnZ0GmKqQWQYoS8-9_e1NfkyrO0yy/exec" target="_blank" rel="noopener">アプリを開く</a>
+  </div>
 </body>
 </html>
