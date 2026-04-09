@@ -4,68 +4,396 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Water Purchase</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>💧</text></svg>">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Water">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #2563eb;
+      --primary-light: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --primary-bg: #eff6ff;
+      --accent: #0ea5e9;
+      --surface: #ffffff;
+      --bg: #f1f5f9;
+      --text: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.03);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Inter', 'Noto Sans JP', sans-serif;
-      background: #f1f5f9;
+      font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      -webkit-font-smoothing: antialiased;
     }
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 40px 32px;
+    .app-container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 0 16px 32px;
+    }
+    .header {
       text-align: center;
-      max-width: 360px;
-      width: 100%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 32px 0 24px;
     }
-    .icon {
-      width: 64px; height: 64px;
-      background: linear-gradient(135deg, #2563eb, #0ea5e9);
-      border-radius: 18px;
+    .header-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
-    .icon svg { width: 32px; height: 32px; }
-    h1 { font-size: 22px; font-weight: 700; color: #0f172a; }
-    p { font-size: 14px; color: #64748b; margin-top: 8px; }
-    .btn {
-      display: block;
-      width: 100%;
-      margin-top: 28px;
-      padding: 16px;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
+    .header-icon svg { width: 28px; height: 28px; }
+    .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+    .header .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+    .tab-bar {
+      display: flex;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+    .tab {
+      flex: 1; padding: 10px 0; text-align: center;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      border: none; background: transparent; color: var(--text-muted);
+      border-radius: 8px; transition: all 0.2s ease;
       font-family: inherit;
-      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
-      transition: transform 0.15s;
     }
-    .btn:active { transform: scale(0.97); }
+    .tab.active {
+      background: var(--primary); color: #fff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      animation: fadeIn 0.3s ease;
+    }
+    .card-title {
+      font-size: 15px; font-weight: 700; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-title .dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--primary);
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block; font-size: 12px; font-weight: 600;
+      margin-bottom: 8px; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    select {
+      width: 100%; padding: 14px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      font-size: 15px; font-family: inherit;
+      background: var(--surface); color: var(--text);
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8'%3E%3Cpath d='M4.5 6l3.5 4 3.5-4z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+
+    .quantity-selector {
+      display: flex; align-items: center; justify-content: center; gap: 20px; padding: 8px 0;
+    }
+    .qty-btn {
+      width: 48px; height: 48px; border-radius: 14px;
+      border: 2px solid var(--border); background: var(--surface);
+      color: var(--text); font-size: 20px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s ease; user-select: none; font-family: inherit;
+    }
+    .qty-btn:active { background: var(--primary); border-color: var(--primary); color: #fff; transform: scale(0.95); }
+    .qty-value { display: flex; flex-direction: column; align-items: center; min-width: 80px; }
+    .qty-number { font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+    .qty-unit { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+
+    .price-card {
+      background: linear-gradient(135deg, var(--primary-bg), #dbeafe);
+      border-radius: var(--radius-sm); padding: 16px;
+      text-align: center; margin-bottom: 20px; border: 1px solid #bfdbfe;
+    }
+    .price-label { font-size: 11px; font-weight: 600; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; }
+    .price-amount { font-size: 32px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.02em; margin-top: 2px; }
+    .price-amount span { font-size: 16px; font-weight: 600; }
+
+    .btn-primary {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff; border: none; border-radius: var(--radius-sm);
+      font-size: 15px; font-weight: 600; font-family: inherit;
+      cursor: pointer; transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; }
+
+    .history-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .history-item:last-child { border-bottom: none; }
+    .history-left { flex: 1; min-width: 0; }
+    .history-name { font-weight: 600; font-size: 14px; }
+    .history-meta { font-size: 12px; color: var(--text-muted); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
+    .history-meta .sep { color: var(--border); }
+    .history-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; margin-left: 12px; }
+    .history-price { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+    .btn-cancel {
+      padding: 6px 12px; border: 1.5px solid var(--border);
+      background: var(--surface); color: var(--text-secondary);
+      border-radius: 8px; font-size: 12px; font-weight: 600;
+      font-family: inherit; cursor: pointer; transition: all 0.15s ease;
+    }
+    .btn-cancel:active { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+    .toast {
+      position: fixed; top: 20px; left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      padding: 14px 24px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 600; font-family: inherit;
+      z-index: 1000; opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none; max-width: 90vw; text-align: center;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.success { background: rgba(16,185,129,0.95); color: #fff; box-shadow: 0 8px 24px rgba(16,185,129,0.3); }
+    .toast.error { background: rgba(239,68,68,0.95); color: #fff; box-shadow: 0 8px 24px rgba(239,68,68,0.3); }
+
+    .loading { text-align: center; padding: 32px; color: var(--text-muted); }
+    .spinner {
+      display: inline-block; width: 28px; height: 28px;
+      border: 3px solid var(--border); border-top-color: var(--primary);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .empty { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
-      </svg>
+  <div class="app-container">
+    <div class="header">
+      <div class="header-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </svg>
+      </div>
+      <h1>Water Purchase</h1>
+      <div class="subtitle">1本 100円</div>
     </div>
-    <h1>Water Purchase</h1>
-    <p>水の社販アプリ</p>
-    <a class="btn" href="https://script.google.com/macros/s/AKfycbyAUBAqUsCKFaUKZLDepclHOUBZRRZwiqn2zI5fnZ0GmKqQWQYoS8-9_e1NfkyrO0yy/exec" target="_blank" rel="noopener">アプリを開く</a>
+
+    <div class="tab-bar">
+      <button class="tab active" onclick="switchTab('purchase')">購入</button>
+      <button class="tab" onclick="switchTab('history')">履歴</button>
+    </div>
+
+    <div id="tab-purchase" class="tab-content active">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>購入記録</div>
+        <div class="form-group">
+          <label class="form-label">名前</label>
+          <select id="memberSelect">
+            <option value="">読み込み中...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">本数</label>
+          <div class="quantity-selector">
+            <button class="qty-btn" onclick="changeQty(-1)">-</button>
+            <div class="qty-value">
+              <span class="qty-number" id="qtyDisplay">1</span>
+              <span class="qty-unit">本</span>
+            </div>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="price-card">
+          <div class="price-label">合計金額</div>
+          <div class="price-amount" id="totalAmount">100<span>円</span></div>
+        </div>
+        <button class="btn-primary" id="submitBtn" onclick="submitPurchase()">記録する</button>
+      </div>
+    </div>
+
+    <div id="tab-history" class="tab-content">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>購入履歴</div>
+        <div id="historyList">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyAUBAqUsCKFaUKZLDepclHOUBZRRZwiqn2zI5fnZ0GmKqQWQYoS8-9_e1NfkyrO0yy/exec';
+    let quantity = 1;
+    let isSubmitting = false;
+
+    loadMembers();
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      if (tab === 'purchase') {
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        document.getElementById('tab-purchase').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab')[1].classList.add('active');
+        document.getElementById('tab-history').classList.add('active');
+        loadHistory();
+      }
+    }
+
+    function changeQty(delta) {
+      quantity = Math.max(1, Math.min(99, quantity + delta));
+      document.getElementById('qtyDisplay').textContent = quantity;
+      document.getElementById('totalAmount').innerHTML = (quantity * 100).toLocaleString() + '<span>円</span>';
+    }
+
+    function showToast(message, type) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast show ' + (type || '');
+      setTimeout(() => { toast.className = 'toast'; }, 2500);
+    }
+
+    async function apiGet(action) {
+      const res = await fetch(API_URL + '?action=' + action);
+      return res.json();
+    }
+
+    async function apiPost(body) {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(body),
+      });
+      return res.json();
+    }
+
+    async function loadMembers() {
+      try {
+        const data = await apiGet('getMembers');
+        const select = document.getElementById('memberSelect');
+        select.innerHTML = '<option value="">選択してください</option>';
+        data.forEach(function(name) {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          select.appendChild(opt);
+        });
+      } catch (e) {
+        showToast('メンバーの読み込みに失敗しました', 'error');
+      }
+    }
+
+    async function submitPurchase() {
+      if (isSubmitting) return;
+      const name = document.getElementById('memberSelect').value;
+      if (!name) { showToast('名前を選択してください', 'error'); return; }
+
+      isSubmitting = true;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = '記録中...';
+
+      try {
+        const result = await apiPost({ action: 'record', name: name, quantity: quantity });
+        if (result.success) {
+          showToast(name + ' ' + quantity + '本 (' + result.amount + '円) を記録しました', 'success');
+          quantity = 1;
+          document.getElementById('qtyDisplay').textContent = 1;
+          document.getElementById('totalAmount').innerHTML = '100<span>円</span>';
+          document.getElementById('memberSelect').value = '';
+        }
+      } catch (e) {
+        showToast('記録に失敗しました', 'error');
+      }
+      isSubmitting = false;
+      btn.disabled = false;
+      btn.textContent = '記録する';
+    }
+
+    async function loadHistory() {
+      const container = document.getElementById('historyList');
+      container.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+      try {
+        const data = await apiGet('getHistory');
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="empty">まだ購入履歴がありません</div>';
+          return;
+        }
+        let html = '';
+        data.forEach(function(item) {
+          html += '<div class="history-item">'
+            + '<div class="history-left">'
+            + '<div class="history-name">' + escapeHtml(item.name) + '</div>'
+            + '<div class="history-meta">' + escapeHtml(item.datetime) + '<span class="sep">|</span>' + item.quantity + '本</div>'
+            + '</div>'
+            + '<div class="history-right">'
+            + '<span class="history-price">' + Number(item.amount).toLocaleString() + '円</span>'
+            + '<button class="btn-cancel" onclick="deletePurchase(\'' + item.id + '\')">取消</button>'
+            + '</div>'
+            + '</div>';
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        container.innerHTML = '<div class="empty">読み込みに失敗しました</div>';
+      }
+    }
+
+    async function deletePurchase(id) {
+      if (!confirm('この記録を取り消しますか？')) return;
+      try {
+        const result = await apiPost({ action: 'delete', id: id });
+        if (result.success) {
+          showToast('記録を取り消しました', 'success');
+          loadHistory();
+        } else {
+          showToast(result.message, 'error');
+        }
+      } catch (e) {
+        showToast('取り消しに失敗しました', 'error');
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+  </script>
 </body>
 </html>
